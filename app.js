@@ -10,11 +10,6 @@ app.get('/', function (req, res) {
 
 
 //endpoint, middleware(s)
-  app.listen(
-    port,
-    ()-> console.log("server is running on ...${port}'
-
-                     }
-    )
-
-    app.listen(3000)
+  app.get('/helloRender', function (req, res) {
+    res.send
+  })
