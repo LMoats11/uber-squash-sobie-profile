@@ -2,8 +2,23 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000;  
 const bodyParser = require('body-parser')
+const { MongoClient, ServerApiVersion } = require('mongodb')
+const uri = process.env.MONGO_URI
 
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+//Create a MONGOClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+})
+
+
+
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(express.static(__dirname + '/public'))
 
@@ -34,11 +49,18 @@ app.post('/saveMyName', (req, res)=>{
 })
 
 
-app.get('/ejs', function (req, res) {
-  res.render('words',
-    {pageTitle: 'my cool ejs page'}
-  );
-})
+app.get('/ejs', async (req, res) => {
+
+  await client.connect();
+  let result = await client.db("lukes-db").collection
+  ("whatever-collection").find({}).toArray();
+
+  console.log(result);
+
+  res.prependListener('index', {
+    ejsResult : result
+  });
+}
 
 
 app.get('/nodemon', function (req, res) {
