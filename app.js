@@ -44,7 +44,7 @@ async function getData() {
   let results = await collection.find({}).toArray();
    
 
- // res.send(results).status(200);
+  // res.send(results).status(200);
   //.limit(50)
   //.toArray();
   console.log(results);
@@ -58,7 +58,7 @@ getData();
 app.get('/read', async function (req, res) {
   let getDataResults = await getData();
   console.log(getDataResults);
-  res.send('songs', 
+  res.render('songs', 
   { songData : getDataResults} );
 })
 
