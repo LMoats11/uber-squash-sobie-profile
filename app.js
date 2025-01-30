@@ -38,7 +38,7 @@ run().catch(console.dir);
 async function getData() {
   
   await client.connect();
-  await client.db("sobie-profile-database"), collection("sobie-profile");
+  await client.db("sobie-profile-database").collection("sobie-profile");
 
   
   let results = await collection.find({}).toArray();
@@ -56,7 +56,7 @@ async function getData() {
 getData();
 
 app.get('/read', async function (req, res) {
-  let getDataResults = getData();
+  let getDataResults = await getData();
   console.log(getDataResults);
   res.send('songs', 
   { songData : getDataResults} );
