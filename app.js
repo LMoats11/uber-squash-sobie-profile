@@ -35,6 +35,33 @@ app.use(express.static(__dirname + '/public'));
 
 run().catch(console.dir);
 
+async function getData() {
+  
+  await client.connect();
+  await client.db("sobie-profile-database"), collection("sobie-profile");
+
+  
+  let results = await collection.find({}).toArray();
+   
+
+  res.send(results).status(200);
+  //.limit(50)
+  //.toArray();
+  console.log(results);
+
+  return results;
+
+}
+
+getData();
+
+app.get('/read', async function (req, res) {
+  let getDataResults = getData();
+  console.log(getDataResults);
+  res.send('songs', 
+  { songData : getDataResults} );
+})
+
 //begin all my middlewares
 
 
