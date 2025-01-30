@@ -33,7 +33,7 @@ app.use(express.static(__dirname + '/public'));
   }
 };
 
-run().catch(console.dir);
+//run().catch(console.dir);
 
 async function getData() {
   
@@ -44,7 +44,7 @@ async function getData() {
   let results = await collection.find({}).toArray();
    
 
-  res.send(results).status(200);
+ // res.send(results).status(200);
   //.limit(50)
   //.toArray();
   console.log(results);
