@@ -38,7 +38,7 @@ run().catch(console.dir);
 async function getData() {
   
   await client.connect();
-  await client.db("sobie-profile-database").collection("sobie-profile");
+  let collection = await client.db("sobie-profile-database").collection("sobie-profile");
 
   
   let results = await collection.find({}).toArray();
