@@ -1,176 +1,86 @@
-const express = require('express');
+const express = require('express')
 require('dotenv').config()
-const app = express();
-const port = process.env.PORT || 3000;  
-const bodyParser = require('body-parser');
-const { ObjectID } = require('mongodb');
+const shajs = require('sha.js')
+const app = express()
+const port = process.env.PORT || 5000;  
+const bodyParser = require('body-parser')
+const { ObjectId } = require('mongodb')
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = process.env.MONGO_URI;
 
-//console.log(uri);
-
-
 app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.urlencoded({extended: true})); 
+app.use(express.static(__dirname + '/public'))
 
-//Create a MONGOClient with a MongoClientOptions object to set the Stable API version
- const client = new MongoClient(uri, {
-  serverApi: {version: ServerApiVersion.v1,
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(uri.replace("\"", ""), {
+  serverApi: {
+    version: ServerApiVersion.v1,
     strict: true,
-    deprecationErrors: true,  }
- });
-
- async function run() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    deprecationErrors: true,
   }
-};
+});
 
-//run().catch(console.dir);
+const mongoCollection = client.db("lukeSobieProfile").collection("lukeSobieBlog"); 
 
-async function getData() {
-  
-  await client.connect();
-  let collection = await client.db("sobie-profile-database").collection("sobie-profile");
+function initProfileData() {
 
-  
-  let results = await collection.find({}).toArray();
-   
-
-  // res.send(results).status(200);
-  //.limit(50)
-  //.toArray();
-  console.log(results);
-
-  return results;
+  mongoCollection.insertOne({ 
+    title: "this is blog title",
+    post: "this is the post"
+  });
 
 }
 
-getData();
+// initProfileData(); 
 
-app.get('/read', async function (req, res) {
-  let getDataResults = await getData();
-  console.log(getDataResults);
-  res.render('songs', 
-  { songData : getDataResults} );
+
+app.get('/', async function (req, res) {
+  
+  let results = await mongoCollection.find({}).toArray(); 
+  
+  res.render('profile', 
+    { profileData : results} ); 
+
 })
 
-//begin all my middlewares
+app.post('/insert', async (req,res)=> {
 
+  let results = await mongoCollection.insertOne({ 
+    title: req.body.title,
+    post: req.body.post
+  });
 
-app.use(bodyParser.urlencoded({extended: true}))
-app.use(express.static(__dirname + '/public'))
+  res.redirect('/');
 
-//app.post('/insert', async (req,res)=> {
-  app.get('/insert', async (req,res)=> {
-
-    console.log('in /insert');
+}); 
+app.post('/delete', async function (req, res) {
   
-    // let newSong = req.body.newSong; //only for POST, GET is req.params?
-     
-    //let newSong = req.query.myName;
-
-      console.log(newSong);
-
-    //connect to db,
-    await client.connect();
-  
-    //point to the collection 
-  
-    await client
-    .db("sobie-profile-database")
-    .collection("sobie-profile")
-    .insertOne({ songList: newSong});
-    
-    res.redirect('/read');
-  
-  }); 
-
-  app.post('/delete/:id', async (req,res)=>{
-
-    console.log("in delete, req.parms.id: ", req.params.id)
-  
-    client.connect; 
-    const collection = client.db("sobie-profile-database").collection("sobie-profile");
-    let result = await collection.findOneAndDelete( 
+    let result = await mongoCollection.findOneAndDelete( 
     {
-      "_id": new ObjectId(req.body.nameID)},
-    { $set: {"fname": req.body.inputUpdateName } }
-    )
-      
-      .then(result => {
-    console.log(result); 
+      "_id": new ObjectId(req.body.deleteId)
+    }
+  ).then(result => {
+    
     res.redirect('/');
-  
   })
-  
-    //insert into it
-  
-  })
-  
 
+}); 
 
-app.get('/', function (req, res) {
-  res.sendFile('index.html');
-});
-
-app.post('/saveMyName', (req, res)=>{
-  console.log('did we hit the endpoint??');
-
-  console.log(req.body);
-
-  res.redirect('/ejs');
-});
-
-app.post('/saveMyName', (req, res)=>{
-  console.log('did we hit the endpoint??');
-
-  console.log(req.query);
-
-  res.render('words', 
-  {pageTitle: req.body.myName});
-  
-
-  
+app.post('/update', async (req,res)=>{
+  let result = await mongoCollection.findOneAndUpdate( 
+  {_id: ObjectId.createFromHexString(req.body.updateId)}, { 
+    $set: 
+      {
+        title : req.body.updateTitle, 
+        post : req.body.updatePost 
+      }
+     }
+  ).then(result => {
+  console.log(result); 
+  res.redirect('/');
+})
 }); 
 
 
-
-app.get('/ejs', async (req, res) => {
-
-  await client.connect();
-  let result = await client.db("sobie-profile-database").collection
-  ("sobie-profile").find({}).toArray();
-
-  console.log(result);
-
-  res.prependListener('index', {
-    ejsResult : result
-  });
-});
-
-
-app.get('/nodemon', function (req, res) {
-  res.send('look ma, no kill node process then restart node then refresh browser...cool?');
-
-});
-
-//endpoint, middleware(s)
-// app.get('/helloRender', function (req, res) {
-//   res.send('Hello Express from Real World<br><a href="/">back to home</a>')
-// })
-
-app.listen(
-  port, 
-  ()=> console.log(
-    `server is running on ... ${port}`
-    )
-  );
+app.listen(port, ()=> console.log(`server is running on ... localhost:${port}`) );
