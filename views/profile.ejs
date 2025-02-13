@@ -1,65 +1,84 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Luke Sobie Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
-  <link rel="stylesheet" href="styles/style.css">
-
+  <title>Luke Sobie | Developer Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/style.css">
 </head>
 <body>
 
-<main>
-
-    <form method="POST" action="insert/">
-        <input name="title">
-        <input name="post">
-        <button class="btn btn-primary" role="submit">new post</button>
-      </form>
-
-      
-    <% profileData.forEach(result=> { %>
-        <div class="col-md-8">
-        
-  
-      <form method="POST" action="update/">
-        <input name="updateTitle" value="<%= result.title %>">
-        <input name="updatePost" value="<%= result.post %>"> 
-        <input type="hidden" name="updateId" value="<%=result._id %>">
-        <button class="btn btn-primary" role="submit"><i class="bi bi-pencil"></i></button>
-      </form>
-      
-  
-  
-      <form method="POST" action="delete/">
-        <input type="hidden" name="deleteId" value="<%=result._id %>">
-        <button class="btn btn-primary" role="submit"><i class="bi bi-trash3"></i></button>
-      </form>
-  
-  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="/">Luke Sobie</a>
     </div>
-      <% }); %>
+  </nav>
 
-</main>
+  <main class="container mt-5">
+    <div class="row">
+      <!-- Profile Card -->
+      <div class="col-md-4">
+        <div class="card shadow">
+          <img src="/images/profile.jpg" class="card-img-top" alt="Profile Picture">
+          <div class="card-body text-center">
+            <h3 class="card-title">Luke Sobie</h3>
+            <p class="text-muted">Full-Stack Developer | JavaScript | Node.js | MongoDB</p>
+            <p>Passionate about building web applications that make an impact.</p>
+            <a href="https://github.com/LMoats11" class="btn btn-dark">GitHub</a>
+            <a href="mailto:luke@example.com" class="btn btn-primary">Email Me</a>
+          </div>
+        </div>
+      </div>
 
+      <!-- Blog Posts -->
+      <div class="col-md-8">
+        <h3>My Blog</h3>
 
+        <!-- New Post Form -->
+        <form method="POST" action="/insert">
+          <div class="mb-3">
+            <input name="title" class="form-control" placeholder="Post Title" required>
+          </div>
+          <div class="mb-3">
+            <textarea name="post" class="form-control" placeholder="Write something..." required></textarea>
+          </div>
+          <button class="btn btn-primary">New Post</button>
+        </form>
 
-    
-<footer class="footer bg-body-tertiary text-center text-lg-start fixed-bottom">
-    <!-- Copyright -->
-    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-      © 2024
-      <a class="text-body" href="https://mdbootstrap.com/">bc</a> |
-      <a href="https://gist.github.com/assets/22795694/d414efab-a80c-4b31-aeac-9636a0681f41" target="_blank">see my wireframe</a>
-      <!-- Copyright -->
+        <hr>
+
+        <% profileData.forEach(result => { %>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5><%= result.title %></h5>
+              <p><%= result.post %></p>
+
+              <!-- Update Form -->
+              <form method="POST" action="/update" class="d-inline">
+                <input type="hidden" name="updateId" value="<%= result._id %>">
+                <input name="updateTitle" class="form-control d-inline w-50" value="<%= result.title %>">
+                <input name="updatePost" class="form-control d-inline w-50" value="<%= result.post %>">
+                <button class="btn btn-warning btn-sm">Update</button>
+              </form>
+
+              <!-- Delete Form -->
+              <form method="POST" action="/delete" class="d-inline">
+                <input type="hidden" name="deleteId" value="<%= result._id %>">
+                <button class="btn btn-danger btn-sm">Delete</button>
+              </form>
+            </div>
+          </div>
+        <% }); %>
+
+      </div>
     </div>
+  </main>
+
+  <footer class="footer text-center p-3 bg-light">
+    <p>© 2024 Luke Sobie | <a href="https://github.com/LMoats11">GitHub</a></p>
   </footer>
-  
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.3/jquery-ui.min.js'></script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js'></script>
-    <script  src="scripts/script.js"></script>
-  
-  </body>
-  </html>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+</body>
+</html>
