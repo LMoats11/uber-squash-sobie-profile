@@ -2,7 +2,7 @@
   "name": "uber-squash-sobie-profile",
   "version": "1.0.0",
   "description": "CIS 486 Spring 2025 The Sobie Dev Co. Profile",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
