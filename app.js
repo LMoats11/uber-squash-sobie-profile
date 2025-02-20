@@ -7,7 +7,10 @@ const port = process.env.PORT || 5000;
 
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1
+  serverApi: ServerApiVersion.v1,
+  strict: true,
+  deprecationErrors: true,
+}
 });
 const mongoCollection = client.db("lukeSobieProfile").collection("lukeSobieBlog");
 
