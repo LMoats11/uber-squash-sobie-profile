@@ -2,22 +2,22 @@ const express = require('express');
 require('dotenv').config();
 const { MongoClient, ObjectId, ServerApiVersion } = require('mongodb');
 const bodyParser = require('body-parser');
+
 const app = express();
 const port = process.env.PORT || 5000;  
 
 const uri = process.env.MONGO_URI;
+
 const client = new MongoClient(uri, {
   serverApi: ServerApiVersion.v1,
-  strict: true,
-  deprecationErrors: true,
-}
+  
 });
+
 const mongoCollection = client.db("lukeSobieProfile").collection("lukeSobieBlog");
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
-
 
 app.get('/', async (req, res) => {
   let results = await mongoCollection.find({}).toArray();
@@ -29,7 +29,6 @@ app.post('/insert', async (req, res) => {
   res.redirect('/');
 });
 
-
 app.post('/update', async (req, res) => {
   await mongoCollection.findOneAndUpdate(
     { _id: new ObjectId(req.body.updateId) },
@@ -37,7 +36,6 @@ app.post('/update', async (req, res) => {
   );
   res.redirect('/');
 });
-
 
 app.post('/delete', async (req, res) => {
   await mongoCollection.findOneAndDelete({ _id: new ObjectId(req.body.deleteId) });
