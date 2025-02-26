@@ -1,84 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Luke Sobie | Developer Profile</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles/style.css">
-</head>
-<body>
+<%- include('partials/header') %>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="/">Luke Sobie</a>
-    </div>
-  </nav>
+<div class="container my-4">
+    <h1 class="text-center">Sobie Dev Co. Blog</h1>
 
-  <main class="container mt-5">
+    <img src="/profile.jpg" alt="Profile Picture" class="img-fluid rounded-circle shadow-lg my-3" width="200">
     <div class="row">
-      <!-- Profile Card -->
-      <div class="col-md-4">
-        <div class="card shadow">
-          <img src="/images/profile.jpg" class="card-img-top" alt="Profile Picture">
-          <div class="card-body text-center">
-            <h3 class="card-title">Luke Sobie</h3>
-            <p class="text-muted">Full-Stack Developer | JavaScript | Node.js | MongoDB</p>
-            <p>Passionate about building web applications that make an impact.</p>
-            <a href="https://github.com/LMoats11" class="btn btn-dark">GitHub</a>
-            <a href="mailto:luke@example.com" class="btn btn-primary">Email Me</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Blog Posts -->
-      <div class="col-md-8">
-        <h3>My Blog</h3>
-
-        <!-- New Post Form -->
-        <form method="POST" action="/insert">
-          <div class="mb-3">
-            <input name="title" class="form-control" placeholder="Post Title" required>
-          </div>
-          <div class="mb-3">
-            <textarea name="post" class="form-control" placeholder="Write something..." required></textarea>
-          </div>
-          <button class="btn btn-primary">New Post</button>
-        </form>
-
-        <hr>
-
-        <% profileData.forEach(result => { %>
-          <div class="card mb-3">
-            <div class="card-body">
-              <h5><%= result.title %></h5>
-              <p><%= result.post %></p>
-
-              <!-- Update Form -->
-              <form method="POST" action="/update" class="d-inline">
-                <input type="hidden" name="updateId" value="<%= result._id %>">
-                <input name="updateTitle" class="form-control d-inline w-50" value="<%= result.title %>">
-                <input name="updatePost" class="form-control d-inline w-50" value="<%= result.post %>">
-                <button class="btn btn-warning btn-sm">Update</button>
-              </form>
-
-              <!-- Delete Form -->
-              <form method="POST" action="/delete" class="d-inline">
-                <input type="hidden" name="deleteId" value="<%= result._id %>">
-                <button class="btn btn-danger btn-sm">Delete</button>
-              </form>
+        <% profileData.forEach(post => { %>
+            <div class="col-md-4">
+                <div class="card shadow-lg border-0 mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary"><%= post.title %></h5>
+                        <p class="card-text"><%= post.post %></p>
+                    </div>
+                </div>
             </div>
-          </div>
-        <% }); %>
-
-      </div>
+        <% }) %>
     </div>
-  </main>
+</div>
 
-  <footer class="footer text-center p-3 bg-light">
-    <p>© 2024 Luke Sobie | <a href="https://github.com/LMoats11">GitHub</a></p>
-  </footer>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
-</body>
-</html>
+<%- include('partials/footer') %> 
