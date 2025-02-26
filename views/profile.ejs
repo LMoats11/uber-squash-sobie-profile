@@ -19,21 +19,36 @@
             <img src="/profile.jpg" alt="Profile Picture" class="profile-img">
         </div>
 
-        <!-- Blog Posts (Check if Data Exists) -->
-        <% if (profileData && profileData.length > 0) { %>
+        <!-- Blog Posts Section -->
+        <div class="blog-section">
+            <h2>Blog Posts</h2>
+            <form action="/insert" method="POST" class="blog-form">
+                <input type="text" name="title" placeholder="Blog Title" required>
+                <textarea name="post" placeholder="Write your post..." required></textarea>
+                <button type="submit">Add Post</button>
+            </form>
+
+            <!-- Display Existing Blog Posts -->
             <% profileData.forEach(post => { %>
-                <div class="card">
-                    <h2 class="card-title"><%= post.title %></h2>
-                    <p class="card-text"><%= post.post %></p>
+                <div class="blog-card">
+                    <h3><%= post.title %></h3>
+                    <p><%= post.post %></p>
+                    <form action="/update" method="POST" class="blog-update">
+                        <input type="hidden" name="updateId" value="<%= post._id %>">
+                        <input type="text" name="updateTitle" placeholder="New Title" required>
+                        <textarea name="updatePost" placeholder="Update your post..." required></textarea>
+                        <button type="submit">Update</button>
+                    </form>
+                    <form action="/delete" method="POST" class="blog-delete">
+                        <input type="hidden" name="deleteId" value="<%= post._id %>">
+                        <button type="submit">Delete</button>
+                    </form>
                 </div>
             <% }) %>
-        <% } else { %>
-            <p class="no-posts">No blog posts found.</p>
-        <% } %>
-
+        </div>
     </div>
 
-
+    <!-- Include Footer -->
     <%- include('partials/footer') %>
 
 </body>
