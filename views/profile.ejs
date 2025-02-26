@@ -14,20 +14,26 @@
     <div class="container">
         <h1 class="page-title">Luke Sobie Profile</h1>
         
+        <!-- Profile Image -->
         <div class="profile-container">
             <img src="/profile.jpg" alt="Profile Picture" class="profile-img">
         </div>
 
-        <% profileData.forEach(post => { %>
-            <div class="card">
-                <h2 class="card-title"><%= post.title %></h2>
-                <p class="card-text"><%= post.post %></p>
-            </div>
-        <% }) %>
+        <!-- Blog Posts (Check if Data Exists) -->
+        <% if (profileData && profileData.length > 0) { %>
+            <% profileData.forEach(post => { %>
+                <div class="card">
+                    <h2 class="card-title"><%= post.title %></h2>
+                    <p class="card-text"><%= post.post %></p>
+                </div>
+            <% }) %>
+        <% } else { %>
+            <p class="no-posts">No blog posts found.</p>
+        <% } %>
 
     </div>
 
-    <!-- Include Footer -->
+
     <%- include('partials/footer') %>
 
 </body>
