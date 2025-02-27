@@ -7,7 +7,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/public/styles/style.css">
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
 
@@ -44,13 +44,19 @@
                             <h4><%= result.title %></h4>
                             <p><%= result.post %></p>
 
-                            <button class="btn btn-warning w-100 toggle-update"><i class="bi bi-pencil"></i> Update</button>
-
-                            <form method="POST" action="update/" class="update-form mt-2" style="display: none;">
-                                <input class="form-control mb-2" name="updateTitle" value="<%= result.title %>">
+                           <p>we are in the form update</p>
+                          <details>
+                            <summary>update here  Requirements</summary>
+                          
+                            <form method="POST" action="update/" class="update-form mt-2">
+                                <input class="form-control mb-2" name="updateTitle" value="<%= result.title %>" contenteditable="true">
                                 <textarea class="form-control mb-2" name="updatePost"><%= result.post %></textarea>
                                 <input type="hidden" name="updateId" value="<%= result._id %>">
+                               
                                 <button class="btn btn-success w-100" type="submit"><i class="bi bi-check"></i> Save</button>
+
+                                <button class="btn btn-warning w-100 toggle-update"><i class="bi bi-pencil"></i> Update</button>
+                            </details> 
                             </form>
 
                             <form method="POST" action="delete/" class="mt-2">
@@ -74,7 +80,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.3/jquery-ui.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
-    <script src="/script.js"></script>
+    <script src="./scripts/script.js"></script>
 
 </body>
 </html>
