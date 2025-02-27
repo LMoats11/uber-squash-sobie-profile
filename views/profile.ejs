@@ -15,44 +15,59 @@
         <h1>Luke's Profile</h1>
     </header>
 
-    <main class="container mt-4">
-        <div class="card p-4 shadow-sm">
-            <h2 class="text-center mb-3">Create a New Post</h2>
-            <form method="POST" action="insert/" class="mb-3">
-                <input class="form-control mb-2" name="title" placeholder="Title">
-                <textarea class="form-control mb-2" name="post" placeholder="Write your post here..."></textarea>
-                <button class="btn btn-primary w-100" type="submit">New Post</button>
-            </form>
-        </div>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar for Profile Info -->
+            <aside class="col-md-4 d-none d-md-block bg-dark text-white text-center p-4 profile-sidebar">
+                <img src="images/profile.jpg" class="rounded-circle profile-img mb-3" alt="Profile Image">
+                <h3>Luke Sobie</h3>
+                <p>Full-Stack Developer | Tech Enthusiast</p>
+                <a href="https://github.com/LMoats11" target="_blank" class="btn btn-outline-light btn-sm">GitHub</a>
+                <a href="https://lmoats11.github.io/LMoats11/" target="_blank" class="btn btn-outline-light btn-sm">Portfolio</a>
+            </aside>
 
-        <h2 class="mt-4 mb-3 text-center">Your Posts</h2>
-
-        <% profileData.forEach(result => { %>
-            <div class="col-md-8 mx-auto mb-3">
-                <div class="card p-3 shadow-sm">
-                    <h4><%= result.title %></h4>
-                    <p><%= result.post %></p>
-
-                    <form method="POST" action="update/" class="mb-2">
-                        <input class="form-control mb-2" name="updateTitle" value="<%= result.title %>">
-                        <textarea class="form-control mb-2" name="updatePost"><%= result.post %></textarea>
-                        <input type="hidden" name="updateId" value="<%= result._id %>">
-                        <button class="btn btn-warning w-100" type="submit"><i class="bi bi-pencil"></i> Update</button>
-                    </form>
-
-                    <form method="POST" action="delete/">
-                        <input type="hidden" name="deleteId" value="<%= result._id %>">
-                        <button class="btn btn-danger w-100" type="submit"><i class="bi bi-trash3"></i> Delete</button>
+            <!-- Main Content -->
+            <main class="col-md-8 p-4">
+                <div class="card p-4 shadow-sm">
+                    <h2 class="text-center mb-3">Create a New Post</h2>
+                    <form method="POST" action="insert/" class="mb-3">
+                        <input class="form-control mb-2" name="title" placeholder="Title">
+                        <textarea class="form-control mb-2" name="post" placeholder="Write your post here..."></textarea>
+                        <button class="btn btn-primary w-100" type="submit">New Post</button>
                     </form>
                 </div>
-            </div>
-        <% }); %>
-    </main>
 
-    <footer class="footer bg-dark text-center text-white fixed-bottom py-2">
+                <h2 class="mt-4 mb-3 text-center">Posts</h2>
+
+                <% profileData.forEach(result => { %>
+                    <div class="col-md-10 mx-auto mb-3">
+                        <div class="card p-3 shadow-sm">
+                            <h4><%= result.title %></h4>
+                            <p><%= result.post %></p>
+
+                            <button class="btn btn-warning w-100 toggle-update"><i class="bi bi-pencil"></i> Update</button>
+
+                            <form method="POST" action="update/" class="update-form mt-2" style="display: none;">
+                                <input class="form-control mb-2" name="updateTitle" value="<%= result.title %>">
+                                <textarea class="form-control mb-2" name="updatePost"><%= result.post %></textarea>
+                                <input type="hidden" name="updateId" value="<%= result._id %>">
+                                <button class="btn btn-success w-100" type="submit"><i class="bi bi-check"></i> Save</button>
+                            </form>
+
+                            <form method="POST" action="delete/" class="mt-2">
+                                <input type="hidden" name="deleteId" value="<%= result._id %>">
+                                <button class="btn btn-danger w-100" type="submit"><i class="bi bi-trash3"></i> Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            </main>
+        </div>
+    </div>
+
+    <footer class="footer bg-dark text-center text-white py-2">
         <div>
-            © 2024
-            <a class="text-white" href="https://mdbootstrap.com/">BC</a> |
+            2025 |
             <a class="text-white" href="https://github.com/LMoats11/uber-squash-sobie-profile" target="_blank">See my source code!</a>
         </div>
     </footer>
