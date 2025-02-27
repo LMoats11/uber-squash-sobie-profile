@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000;
 const uri = process.env.MONGO_URI;
 
 const client = new MongoClient(uri, {
-  serverApi: ServerApiVersion.v1,
+  serverApi: ServerApiVersion.v1
   
 });
 
@@ -17,7 +17,7 @@ const mongoCollection = client.db("lukeSobieProfile").collection("lukeSobieBlog"
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+app.use(express.static(__dirname + 'public'));
 
 app.get('/', async (req, res) => {
   let results = await mongoCollection.find({}).toArray();
