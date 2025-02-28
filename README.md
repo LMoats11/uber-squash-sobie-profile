@@ -1,36 +1,18 @@
+Profile Web Application
 
-CIS 486 Spring 2025 The Sobie Dev Co. Profile
-# Hello, I'm Luke Moats
+This is a Node.js and Express-based web application that serves a user profile page with blog post functionality, using MongoDB for data storage. The app allows users to create, update, and delete blog posts dynamically.
 
-👨‍🏫 **Senior at University of North Alabama**  
-🌍 Currently live in **Florence, AL**  
-  
+Features
 
-I am interested in finding new places, meeting new people, and seeing new things. I love nature, science, and art as well!
+Displays a profile page with a profile image
 
-### Skills and Technologies
-- **Frontend Development**: HTML5, CSS3, JavaScript, Bootstrap, jQuery
-- **Database Technologies**: MongoDB, SQL
-- **Dev Tools**: Git, GitHub
+Allows users to add, edit, and delete blog posts
 
-### Contact Me
-Feel free to connect with me on:
-- [GitHub](https://github.com/LMoats11)
+Uses MongoDB to store blog posts
 
+Styled using CSS (located in public/styles/styles.css)
 
-![Profile Badge](https://img.shields.io/github/followers/LMoats11?label=Follow%20Me&style=social)  
-
-### Check out My Stuff!
-- **https://lmoats11.github.io/LMoats11/**
-
-
-### 🔧 Skills and Tools
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-
-
+Includes a header and footer for consistent layout
 ### 📊 GitHub Stats
 ![LMoats11's GitHub Stats](https://github-readme-stats.vercel.app/api?username=LMoats11&show_icons=true&theme=radical)  
 ![GitHub Streak](https://github-readme-streak-stats.herokuapp.com/?user=LMoats11&theme=dark)  
