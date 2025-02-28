@@ -1,14 +1,12 @@
 
-window.onscroll = function () {
-    const scrollButton = document.getElementById('scroll-to-top');
-    if (document.documentElement.scrollTop > 200) {
-      scrollButton.style.display = 'block';
-    } else {
-      scrollButton.style.display = 'none';
-    }
+document.addEventListener("DOMContentLoaded", function () {
+  console.log("script.js loaded");
+
+
+  window.onscroll = function () {
+      let navbar = document.getElementById("navbar");
+      if (navbar) {
+          navbar.style.backgroundColor = window.scrollY > 50 ? "blue" : "transparent";
+      }
   };
-  
-  function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-  
+});
